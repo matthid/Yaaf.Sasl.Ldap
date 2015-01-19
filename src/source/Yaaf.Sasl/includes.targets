@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootNamespace>Yaaf.DependencyInjection</RootNamespace>
+    <AssemblyName>Yaaf.DependencyInjection</AssemblyName>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\buildConfig.targets" />
+  <ItemGroup>
+    <CompileImports Include="..\..\SharedAssemblyInfo.fs">
+      <Link>SolutionInfo.fs</Link>
+    </CompileImports>
+    <CompileImports Include="AssemblyInfo.fs" />
+    <CompileImports Include="SaslInterface.fs" />
+    <CompileImports Include="PLAIN.fs" />
+    <CompileImports Include="EXTERNAL.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <NoneImports Include="packages.config">
+      <SubType>Designer</SubType>
+    </NoneImports>
+  </ItemGroup>
+  <ItemGroup>
+    <ReferenceImports Include="$(FSHARP_CORE_INCLUDE)">
+      <HintPath>$(FSHARP_CORE_HINTPATH)</HintPath>
+    </ReferenceImports>
+  </ItemGroup>
+</Project>

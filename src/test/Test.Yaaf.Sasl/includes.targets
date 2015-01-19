@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootNamespace>Test.Yaaf.Sasl</RootNamespace>
+    <AssemblyName>Test.Yaaf.Sasl</AssemblyName>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\buildConfig.targets" />
+  <ItemGroup>
+    <CompileImports Include="..\..\SharedAssemblyInfo.fs">
+      <Link>SharedAssemblyInfo.fs</Link>
+    </CompileImports>
+    <CompileImports Include="AssemblyInfo.fs" />
+    <CompileImports Include="TestPlainAuth.fs" />
+    <NoneImports Include="Script.fsx" />
+    <NoneImports Include="app.config" />
+    <NoneImports Include="packages.config" />
+  </ItemGroup>
+    <ReferenceImports Include="$(FSHARP_CORE_INCLUDE)">
+      <HintPath>$(FSHARP_CORE_HINTPATH)</HintPath>
+    </ReferenceImports>
+    <ReferenceImports Include="nunit.framework">
+      <HintPath>..\..\..\.nuget\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </ReferenceImports>
+    <ReferenceImports Include="Unquote">
+      <HintPath>..\..\..\.nuget\packages\Unquote.2.2.2\lib\net40\Unquote.dll</HintPath>
+      <Private>True</Private>
+    </ReferenceImports>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\source\Yaaf.Sasl\Yaaf.Sasl.Ldap.$(CustomBuildName).fsproj">
+      <Name>Yaaf.Sasl.Ldap.$(CustomBuildName)</Name>
+      <Project>{acb4d3e9-0627-48c7-9790-10aa6926fb6f}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

@@ -1,4 +1,4 @@
-﻿# Yaaf.DependencyInjection implementation documentation 
+﻿# Yaaf.Sasl implementation documentation 
 
 ## Building
 
@@ -12,9 +12,9 @@ This project aims to be a very flexible, extendable and good performing IRC impl
 
 ### Issues / Features / TODOs
 
-New features are accepted via github pull requests (so just fork away right now!):  https://github.com/matthid/Yaaf.DependencyInjection.
+New features are accepted via github pull requests (so just fork away right now!):  https://github.com/matthid/Yaaf.Sasl.
 
-Issues and TODOs are tracked on github, see: https://github.com/matthid/Yaaf.DependencyInjection/issues.
+Issues and TODOs are tracked on github, see: https://github.com/matthid/Yaaf.Sasl/issues.
 
 Discussions/Forums are on IRC. 
 
@@ -24,7 +24,8 @@ http://semver.org/
 
 ### High level documentation ordered by project.
 
-- `IrcDotNet`: The Core of the IRC.Net implementation, basically all you need to get started.
+- `Yaaf.Sasl`: The Core abstraction and implementation of SASL.
+- `Yaaf.Sasl.Ldap`: A LDAP backend for SASL PLAIN authentication.
 
 ### The Project structure:
 

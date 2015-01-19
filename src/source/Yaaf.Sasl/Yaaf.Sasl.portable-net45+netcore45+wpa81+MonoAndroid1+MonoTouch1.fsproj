@@ -8,6 +8,7 @@
     <ProjectGuid>{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <CustomBuildName>portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1</CustomBuildName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
     <TargetProfile>netcore</TargetProfile>

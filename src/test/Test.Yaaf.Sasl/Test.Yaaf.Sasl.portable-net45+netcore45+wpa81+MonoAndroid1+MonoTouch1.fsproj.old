@@ -9,6 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <CustomBuildName>portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1</CustomBuildName>
     <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
     <TargetProfile>netcore</TargetProfile>
     <TargetFSharpCoreVersion>3.3.1.0</TargetFSharpCoreVersion>

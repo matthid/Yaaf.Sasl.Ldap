@@ -15,6 +15,7 @@
     <NoneImports Include="app.config" />
     <NoneImports Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
     <ReferenceImports Include="$(FSHARP_CORE_INCLUDE)">
       <HintPath>$(FSHARP_CORE_HINTPATH)</HintPath>
     </ReferenceImports>

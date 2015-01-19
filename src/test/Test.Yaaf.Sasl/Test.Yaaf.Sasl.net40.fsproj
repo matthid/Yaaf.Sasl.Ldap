@@ -55,8 +55,8 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <ItemGroup>
-    <Compile Include="..\..\SolutionInfo.fs">
-      <Link>SolutionInfo.fs</Link>
+    <Compile Include="..\..\SharedAssemblyInfo.fs">
+      <Link>SharedAssemblyInfo.fs</Link>
     </Compile>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="TestPlainAuth.fs" />

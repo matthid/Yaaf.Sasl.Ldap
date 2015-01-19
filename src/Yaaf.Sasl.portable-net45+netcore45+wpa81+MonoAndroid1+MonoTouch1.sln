@@ -68,11 +68,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{9A47C8E6
 		..\nuget\IrcDotNet.Sample.nuspec = ..\nuget\IrcDotNet.Sample.nuspec
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{06C1F8D3-2F2C-4B6F-B15B-D99D7D4F35E1}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yaaf.Sasl.portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1", "source\Yaaf.Sasl\Yaaf.Sasl.portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1.fsproj", "{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yaaf.DependencyInjection.Ninject.portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1", "source\Yaaf.DependencyInjection.Ninject\Yaaf.DependencyInjection.Ninject.portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1.csproj", "{07D79E26-C068-4E44-9712-4707E2F88E2A}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yaaf.Sasl.Ldap.portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1", "source\Yaaf.Sasl.Ldap\Yaaf.Sasl.Ldap.portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1.fsproj", "{F63881EB-2396-463F-8756-CBBA3F2AF9FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yaaf.DependencyInjection.portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1", "source\Yaaf.DependencyInjection\Yaaf.DependencyInjection.portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1.csproj", "{337804C8-9420-4E2D-A918-A62AC2F84555}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Test.Yaaf.Sasl.portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1", "test\Test.Yaaf.Sasl\Test.Yaaf.Sasl.portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1.fsproj", "{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,14 +80,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{07D79E26-C068-4E44-9712-4707E2F88E2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{07D79E26-C068-4E44-9712-4707E2F88E2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{07D79E26-C068-4E44-9712-4707E2F88E2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{07D79E26-C068-4E44-9712-4707E2F88E2A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{337804C8-9420-4E2D-A918-A62AC2F84555}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{337804C8-9420-4E2D-A918-A62AC2F84555}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{337804C8-9420-4E2D-A918-A62AC2F84555}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{337804C8-9420-4E2D-A918-A62AC2F84555}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

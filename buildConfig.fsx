@@ -26,10 +26,10 @@ open Fake.FSharpFormatting
 open AssemblyInfoFile
 
 // properties (main)
-let projectName = "Yaaf.DependencyInjection"
-let copyrightNotice = "Yaaf.DependencyInjection Copyright © Matthias Dittrich 2011-2015"
-let projectSummary = "Yaaf.DependencyInjection is a simple abstraction layer over a (simple) dependency injection library."
-let projectDescription = "Yaaf.DependencyInjection is a simple abstraction layer over a (simple) dependency injection library."
+let projectName = "Yaaf.Sasl"
+let copyrightNotice = "Yaaf.Sasl Copyright © Matthias Dittrich 2011-2015"
+let projectSummary = "Yaaf.Sasl is a simple .net library for SASL."
+let projectDescription = "Yaaf.Sasl is a SASL .net library."
 let authors = ["Matthias Dittrich"]
 let page_author = "Matthias Dittrich"
 let mail = "matthi.d@gmail.com"
@@ -37,12 +37,12 @@ let version = "1.0.0.0"
 let version_nuget = "1.0.0"
 let commitHash = Information.getCurrentSHA1(".")
 
-// properties ninject
-let projectName_ninject = "Yaaf.DependencyInjection.Ninject"
-let projectSummary_ninject = "Yaaf.DependencyInjection.Ninject is a implementation of Yaaf.DependencyInjection for Ninject."
-let projectDescription_ninject = "Yaaf.DependencyInjection.Ninject is a implementation of Yaaf.DependencyInjection for Ninject."
-let version_ninject = "1.0.0.0"
-let version_nuget_ninject = "1.0.0"
+// properties ldap
+let projectName_ldap = "Yaaf.Sasl.Ldap"
+let projectSummary_ldap = "Yaaf.Sasl.Ldap is a server LDAP backend for Yaaf.Sasl."
+let projectDescription_ldap = "Yaaf.Sasl.Ldap is a server LDAP backend for Yaaf.Sasl."
+let version_ldap = "1.0.0.0"
+let version_nuget_ldap = "1.0.0"
 
 //let buildTargets = environVarOrDefault "BUILDTARGETS" ""
 //let buildPlatform = environVarOrDefault "BUILDPLATFORM" "MONO"
@@ -56,18 +56,18 @@ let nugetDir  = "./.nuget/"
 let packageDir  = "./.nuget/packages"
 
 let github_user = "matthid"
-let github_project = "Yaaf.DependencyInjection"
-let nuget_url = "https://www.nuget.org/packages/Yaaf.DependencyInjection/"
+let github_project = "Yaaf.Sasl"
+let nuget_url = "https://www.nuget.org/packages/Yaaf.Sasl/"
 
-let tags = "dependency-injection C# F# dotnet .net ninject"
+let tags = "sasl C# F# dotnet .net ldap"
 
 let buildMode = "Release" // if isMono then "Release" else "Debug"
 
 let generated_file_list =
-  [ "Yaaf.DependencyInjection.dll"
-    "Yaaf.DependencyInjection.xml"
-    "Yaaf.DependencyInjection.Ninject.dll"
-    "Yaaf.DependencyInjection.Ninject.xml" ]
+  [ "Yaaf.Sasl.dll"
+    "Yaaf.Sasl.xml"
+    "Yaaf.Sasl.Ldap.dll"
+    "Yaaf.Sasl.Ldap.xml" ]
 
 // Where to look for *.cshtml templates (in this order)
 let layoutRoots =
@@ -102,7 +102,7 @@ let buildApp (buildParams:BuildParams) =
     let buildDir = buildDir @@ buildParams.CustomBuildName
     CleanDirs [ buildDir ]
     // build app
-    let files = !! (sprintf "src/source/**/*.%s.csproj" buildParams.CustomBuildName)
+    let files = !! (sprintf "src/source/**/*.%s.fsproj" buildParams.CustomBuildName)
     files
         |> MSBuild buildDir "Build" 
             [   "Configuration", buildMode
@@ -113,7 +113,7 @@ let buildTests (buildParams:BuildParams) =
     let testDir = testDir @@ buildParams.CustomBuildName
     CleanDirs [ testDir ]
     // build tests
-    let files = !! (sprintf "src/test/**/Test.*.%s.csproj" buildParams.CustomBuildName)
+    let files = !! (sprintf "src/test/**/Test.*.%s.fsproj" buildParams.CustomBuildName)
     files
         |> MSBuild testDir "Build" 
             [   "Configuration", buildMode

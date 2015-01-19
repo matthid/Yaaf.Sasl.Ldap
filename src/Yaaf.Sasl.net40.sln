@@ -68,11 +68,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{9A47C8E6
 		..\nuget\IrcDotNet.Sample.nuspec = ..\nuget\IrcDotNet.Sample.nuspec
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{06C1F8D3-2F2C-4B6F-B15B-D99D7D4F35E1}"
-EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yaaf.Sasl.net40", "source\Yaaf.Sasl\Yaaf.Sasl.net40.fsproj", "{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yaaf.Sasl.Ldap.net40", "source\Yaaf.Sasl.Ldap\Yaaf.Sasl.Ldap.net40.fsproj", "{F63881EB-2396-463F-8756-CBBA3F2AF9FA}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Test.Yaaf.Sasl.net40", "test\Test.Yaaf.Sasl\Test.Yaaf.Sasl.net40.fsproj", "{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -88,6 +88,10 @@ Global
 		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -77,15 +77,15 @@ MyTarget "SetVersions" (fun _ ->
          Attribute.Version version
          Attribute.FileVersion version
          Attribute.InformationalVersion version_nuget]
-    CreateCSharpAssemblyInfo "./src/SharedAssemblyInfo.cs" info
+    CreateFSharpAssemblyInfo "./src/SharedAssemblyInfo.fs" info
     let info =
-        [Attribute.Company projectName_ninject
-         Attribute.Product projectName_ninject
+        [Attribute.Company projectName_ldap
+         Attribute.Product projectName_ldap
          Attribute.Copyright copyrightNotice
-         Attribute.Version version_ninject
-         Attribute.FileVersion version_ninject
-         Attribute.InformationalVersion version_nuget_ninject]
-    CreateCSharpAssemblyInfo "./src/SharedAssemblyInfo.Ninject.cs" info
+         Attribute.Version version_ldap
+         Attribute.FileVersion version_ldap
+         Attribute.InformationalVersion version_nuget_ldap]
+    CreateFSharpAssemblyInfo "./src/SharedAssemblyInfo.Ldap.fs" info
 )
 
 allParams
@@ -130,23 +130,22 @@ MyTarget "NuGet" (fun _ ->
             AccessKey = getBuildParamOrDefault "nugetkey" ""
             Publish = hasBuildParam "nugetkey"
             Dependencies = [ ] })
-        "nuget/Yaaf.DependencyInjection.nuspec"
-        
+        "nuget/Yaaf.Sasl.nuspec"
     NuGet (fun p -> 
         { p with   
             Authors = authors
-            Project = projectName_ninject
-            Summary = projectSummary_ninject
-            Description = projectDescription_ninject
+            Project = projectName_ldap
+            Summary = projectSummary_ldap
+            Description = projectDescription_ldap
             WorkingDir = "."
-            Version = version_nuget_ninject
+            Version = version_nuget_ldap
             ReleaseNotes = toLines release.Notes
             Tags = tags
             OutputPath = outDir
             AccessKey = getBuildParamOrDefault "nugetkey" ""
             Publish = hasBuildParam "nugetkey"
-            Dependencies = [ "Portable.Ninject", "3.3.1" ] })
-        "nuget/Yaaf.DependencyInjection.Ninject.nuspec"
+            Dependencies = [ projectName, version_nuget ] })
+        "nuget/Yaaf.Sasl.nuspec"
 )
 
 // Documentation 

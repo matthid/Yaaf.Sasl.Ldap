@@ -145,7 +145,7 @@ MyTarget "NuGet" (fun _ ->
             AccessKey = getBuildParamOrDefault "nugetkey" ""
             Publish = hasBuildParam "nugetkey"
             Dependencies = [ projectName, version_nuget ] })
-        "nuget/Yaaf.Sasl.nuspec"
+        "nuget/Yaaf.Sasl.Ldap.nuspec"
 )
 
 // Documentation 

@@ -179,7 +179,7 @@ let buildAllDocumentation outDocDir website_root =
         ensureDirectory outDir
         let binaries =
             referenceBinaries
-            |> List.map (fun lib-> Path.GetFullPath( buildDir @@ "net45" @@ lib ))
+            |> List.map (fun lib -> Path.GetFullPath( buildDir @@ "net45" @@ lib ))
         MetadataFormat.Generate
            (binaries, Path.GetFullPath outDir, layoutRoots,
             parameters = projInfo,
@@ -197,6 +197,11 @@ let buildAllDocumentation outDocDir website_root =
     processDocumentationFiles OutputKind.Latex
     buildReference()
     
+let MyTarget name body =
+    Target name (fun _ -> body false)
+    let single = (sprintf "%s_single" name)
+    Target single (fun _ -> body true)
+
 MyTarget "GithubDoc" (fun _ -> buildAllDocumentation (outDocDir @@ sprintf "%s.github.io" github_user) (sprintf "https://%s.github.io/%s" github_user github_project))
 
 MyTarget "LocalDoc" (fun _ -> 

@@ -25,6 +25,7 @@ open Fake.Git
 open Fake.FSharpFormatting
 open AssemblyInfoFile
 
+
 // properties (main)
 let projectName = "Yaaf.Sasl"
 let copyrightNotice = "Yaaf.Sasl Copyright © Matthias Dittrich 2011-2015"
@@ -44,8 +45,32 @@ let projectDescription_ldap = "Yaaf.Sasl.Ldap is a server LDAP backend for Yaaf.
 let version_ldap = "1.0.0.0"
 let version_nuget_ldap = "1.0.0"
 
-//let buildTargets = environVarOrDefault "BUILDTARGETS" ""
-//let buildPlatform = environVarOrDefault "BUILDPLATFORM" "MONO"
+let github_user = "matthid"
+let github_project = "Yaaf.Sasl"
+let nuget_url = "https://www.nuget.org/packages/Yaaf.Sasl/"
+
+let tags = "sasl C# F# dotnet .net ldap"
+
+let generated_file_list =
+  [ "Yaaf.Sasl.dll"
+    "Yaaf.Sasl.xml"
+    "Yaaf.Sasl.Ldap.dll"
+    "Yaaf.Sasl.Ldap.xml" ]
+
+type BuildParams =
+    {
+        SimpleBuildName : string
+        CustomBuildName : string
+    }
+
+let net40Params = { SimpleBuildName = "net40"; CustomBuildName = "net40" }
+let net45Params = { SimpleBuildName = "net45"; CustomBuildName = "net45" }
+let profile111Params = { SimpleBuildName = "profile111"; CustomBuildName = "portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1" }
+
+let allParams = [ net40Params; net45Params; profile111Params ]
+
+let use_nuget = true
+
 let buildDir = "./build/"
 let releaseDir = "./release/"
 let outLibDir = "./release/lib/"
@@ -55,19 +80,7 @@ let testDir  = "./test/"
 let nugetDir  = "./.nuget/"
 let packageDir  = "./.nuget/packages"
 
-let github_user = "matthid"
-let github_project = "Yaaf.Sasl"
-let nuget_url = "https://www.nuget.org/packages/Yaaf.Sasl/"
-
-let tags = "sasl C# F# dotnet .net ldap"
-
 let buildMode = "Release" // if isMono then "Release" else "Debug"
-
-let generated_file_list =
-  [ "Yaaf.Sasl.dll"
-    "Yaaf.Sasl.xml"
-    "Yaaf.Sasl.Ldap.dll"
-    "Yaaf.Sasl.Ldap.xml" ]
 
 // Where to look for *.cshtml templates (in this order)
 let layoutRoots =
@@ -79,89 +92,36 @@ if isMono then
     //monoArguments <- "--runtime=v4.0"
 
 let github_url = sprintf "https://github.com/%s/%s" github_user github_project
-    
-// Ensure the ./src/.nuget/NuGet.exe file exists (required by xbuild)
-let nuget = findToolInSubPath "NuGet.exe" "./.nuget/Build/NuGet.CommandLine/tools/NuGet.exe"
-System.IO.File.Copy(nuget, "./src/.nuget/NuGet.exe", true)
 
 // Read release notes document
 let release = ReleaseNotesHelper.parseReleaseNotes (File.ReadLines "doc/ReleaseNotes.md")
 
-let MyTarget name body =
-    Target name body
-    Target (sprintf "%s_single" name) body 
-
-
-type BuildParams =
-    {
-        SimpleBuildName : string
-        CustomBuildName : string
-    }
-
-let buildApp (buildParams:BuildParams) =
-    let buildDir = buildDir @@ buildParams.CustomBuildName
-    CleanDirs [ buildDir ]
-    // build app
-    let files = !! (sprintf "src/source/**/*.%s.fsproj" buildParams.CustomBuildName)
-    files
-        |> MSBuild buildDir "Build" 
-            [   "Configuration", buildMode
-                "CustomBuildName", buildParams.CustomBuildName ]
-        |> Log "AppBuild-Output: "
-
-let buildTests (buildParams:BuildParams) =
-    let testDir = testDir @@ buildParams.CustomBuildName
-    CleanDirs [ testDir ]
-    // build tests
-    let files = !! (sprintf "src/test/**/Test.*.%s.fsproj" buildParams.CustomBuildName)
-    files
-        |> MSBuild testDir "Build" 
-            [   "Configuration", buildMode
-                "CustomBuildName", buildParams.CustomBuildName ]
-        |> Log "TestBuild-Output: "
+let nugetPackages =
+  [ "Yaaf.Sasl.nuspec", (fun p ->
+      { p with
+          Authors = authors
+          Project = projectName
+          Summary = projectSummary
+          Description = projectDescription
+          Version = version_nuget
+          ReleaseNotes = toLines release.Notes
+          Tags = tags
+          Dependencies = [ ] })
+    "Yaaf.Sasl.Ldap.nuspec", (fun p ->
+      { p with
+          Authors = authors
+          Project = projectName_ldap
+          Summary = projectSummary_ldap
+          Description = projectDescription_ldap
+          Version = version_nuget_ldap
+          ReleaseNotes = toLines release.Notes
+          Tags = tags
+          Dependencies = [ projectName, version_nuget ] }) ]
     
-let runTests (buildParams:BuildParams) =
-    let testDir = testDir @@ buildParams.CustomBuildName
-    let logs = System.IO.Path.Combine(testDir, "logs")
-    System.IO.Directory.CreateDirectory(logs) |> ignore
-    let files = 
-        !! (testDir + "/Test.*.dll")
-    if files |> Seq.isEmpty then
-      traceError (sprintf "NO test found in %s" testDir)
-    else
-      files
-        |> NUnit (fun p ->
-            {p with
-                //NUnitParams.WorkingDir = working
-                //ExcludeCategory = if isMono then "VBNET" else ""
-                ProcessModel = 
-                    // Because the default nunit-console.exe.config doesn't use .net 4...
-                    if isMono then NUnitProcessModel.SingleProcessModel else NUnitProcessModel.DefaultProcessModel
-                WorkingDir = testDir
-                StopOnError = true
-                TimeOut = System.TimeSpan.FromMinutes 30.0
-                Framework = "4.0"
-                DisableShadowCopy = true;
-                OutputFile = "logs/TestResults.xml" })
+let findProjectFiles (buildParams:BuildParams) =
+    !! (sprintf "src/source/**/*.%s.fsproj" buildParams.CustomBuildName)
+    ++ (sprintf "src/source/**/*.%s.csproj" buildParams.CustomBuildName)
 
-let buildAll (buildParams:BuildParams) =
-    buildApp buildParams
-    buildTests buildParams
-    runTests buildParams
-
-
-let net40Params = { SimpleBuildName = "net40"; CustomBuildName = "net40" }
-let net45Params = { SimpleBuildName = "net45"; CustomBuildName = "net45" }
-let profile111Params = { SimpleBuildName = "profile111"; CustomBuildName = "portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1" }
-
-let allParams = [ net40Params; net45Params; profile111Params ]
-
-// Documentation 
-let buildDocumentationTarget target =
-    trace (sprintf "Building documentation (%s), this could take some time, please wait..." target)
-    let b, s = executeFSI "." "generateDocs.fsx" ["target", target]
-    for l in s do
-        (if l.IsError then traceError else trace) (sprintf "DOCS: %s" l.Message)
-    if not b then
-        failwith "documentation failed"
-    ()
+let findTestFiles (buildParams:BuildParams) =
+    !! (sprintf "src/test/**/Test.*.%s.fsproj" buildParams.CustomBuildName)
+    ++ (sprintf "src/test/**/Test.*.%s.csproj" buildParams.CustomBuildName)

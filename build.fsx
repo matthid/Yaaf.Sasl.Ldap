@@ -16,7 +16,6 @@
 // Supended until FAKE supports custom mono parameters
 #I @".nuget/Build/FAKE/tools/" // FAKE
 #r @"FakeLib.dll"  //FAKE
-
 #load @"buildConfig.fsx"
 open BuildConfig
 
@@ -28,11 +27,67 @@ open Fake.Git
 open Fake.FSharpFormatting
 open AssemblyInfoFile
 
+if use_nuget then
+    // Ensure the ./src/.nuget/NuGet.exe file exists (required by xbuild)
+    let nuget = findToolInSubPath "NuGet.exe" "./.nuget/Build/NuGet.CommandLine/tools/NuGet.exe"
+    System.IO.File.Copy(nuget, "./src/.nuget/NuGet.exe", true)
+
+let buildWithFiles msg dir projectFileFinder (buildParams:BuildParams) =
+    let buildDir = dir @@ buildParams.CustomBuildName
+    CleanDirs [ buildDir ]
+    // build app
+    projectFileFinder buildParams
+        |> MSBuild buildDir "Build"
+            [   "Configuration", buildMode
+                "CustomBuildName", buildParams.CustomBuildName ]
+        |> Log msg
+
+let buildApp = buildWithFiles "AppBuild-Output: " buildDir findProjectFiles
+let buildTests = buildWithFiles "TestBuild-Output: " testDir findTestFiles
+
+let runTests (buildParams:BuildParams) =
+    let testDir = testDir @@ buildParams.CustomBuildName
+    let logs = System.IO.Path.Combine(testDir, "logs")
+    System.IO.Directory.CreateDirectory(logs) |> ignore
+    let files =
+        !! (testDir + "/Test.*.dll")
+    if files |> Seq.isEmpty then
+      traceError (sprintf "NO test found in %s" testDir)
+    else
+      files
+        |> NUnit (fun p ->
+            {p with
+                //NUnitParams.WorkingDir = working
+                //ExcludeCategory = if isMono then "VBNET" else ""
+                ProcessModel =
+                    // Because the default nunit-console.exe.config doesn't use .net 4...
+                    if isMono then NUnitProcessModel.SingleProcessModel else NUnitProcessModel.DefaultProcessModel
+                WorkingDir = testDir
+                StopOnError = true
+                TimeOut = System.TimeSpan.FromMinutes 30.0
+                Framework = "4.0"
+                DisableShadowCopy = true;
+                OutputFile = "logs/TestResults.xml" })
+
+let buildAll (buildParams:BuildParams) =
+    buildApp buildParams
+    buildTests buildParams
+    runTests buildParams
+
+// Documentation
+let buildDocumentationTarget target =
+    trace (sprintf "Building documentation (%s), this could take some time, please wait..." target)
+    let b, s = executeFSI "." "generateDocs.fsx" ["target", target]
+    for l in s do
+        (if l.IsError then traceError else trace) (sprintf "DOCS: %s" l.Message)
+    if not b then
+        failwith "documentation failed"
+    ()
 
 let MyTarget name body =
     Target name (fun _ -> body false)
     let single = (sprintf "%s_single" name)
-    Target single (fun _ -> body true) 
+    Target single (fun _ -> body true)
 
 // Targets
 MyTarget "Clean" (fun _ ->
@@ -116,36 +171,15 @@ MyTarget "CopyToRelease" (fun _ ->
 MyTarget "NuGet" (fun _ ->
     let outDir = releaseDir @@ "nuget"
     ensureDirectory outDir
-    NuGet (fun p -> 
+    for (nuspecFile, settingsFunc) in nugetPackages do
+      NuGet (fun p ->
         { p with   
-            Authors = authors
-            Project = projectName
-            Summary = projectSummary
-            Description = projectDescription
             WorkingDir = "."
-            Version = version_nuget
-            ReleaseNotes = toLines release.Notes
-            Tags = tags
             OutputPath = outDir
             AccessKey = getBuildParamOrDefault "nugetkey" ""
             Publish = hasBuildParam "nugetkey"
-            Dependencies = [ ] })
-        "nuget/Yaaf.Sasl.nuspec"
-    NuGet (fun p -> 
-        { p with   
-            Authors = authors
-            Project = projectName_ldap
-            Summary = projectSummary_ldap
-            Description = projectDescription_ldap
-            WorkingDir = "."
-            Version = version_nuget_ldap
-            ReleaseNotes = toLines release.Notes
-            Tags = tags
-            OutputPath = outDir
-            AccessKey = getBuildParamOrDefault "nugetkey" ""
-            Publish = hasBuildParam "nugetkey"
-            Dependencies = [ projectName, version_nuget ] })
-        "nuget/Yaaf.Sasl.Ldap.nuspec"
+            Dependencies = [ ] } |> settingsFunc)
+        (sprintf "nuget/%s" nuspecFile)
 )
 
 // Documentation 

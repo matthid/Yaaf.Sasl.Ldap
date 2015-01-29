@@ -21,6 +21,6 @@
     <file src="release/lib/net45/Yaaf.Sasl.Ldap.xml" target="lib\net45\Yaaf.Sasl.Ldap.xml" />
     <file src="release/lib/net40/Yaaf.Sasl.Ldap.dll" target="lib\net40\Yaaf.Sasl.Ldap.dll" />
     <file src="release/lib/net40/Yaaf.Sasl.Ldap.xml" target="lib\net40\Yaaf.Sasl.Ldap.xml" />
-    <file src="doc/LICENSE.md" target="LICENSE.md" />
+    <file src="LICENSE.md" target="LICENSE.md" />
   </files>
 </package>

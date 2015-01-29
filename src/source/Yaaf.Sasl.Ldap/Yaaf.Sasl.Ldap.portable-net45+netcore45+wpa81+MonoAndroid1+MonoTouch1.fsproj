@@ -66,11 +66,11 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Security">
-      <HintPath>..\..\..\.nuget\packages\Mono.Security.3.2.3.0\lib\net45\Mono.Security.dll</HintPath>
+      <HintPath>..\..\..\packages\.nuget\Mono.Security.3.2.3.0\lib\net45\Mono.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Novell.Directory.Ldap">
-      <HintPath>..\..\..\.nuget\packages\Novell.Directory.Ldap.2.2.1\lib\Novell.Directory.Ldap.dll</HintPath>
+      <HintPath>..\..\..\packages\.nuget\Novell.Directory.Ldap.2.2.1\lib\Novell.Directory.Ldap.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">

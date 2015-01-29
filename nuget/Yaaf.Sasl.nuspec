@@ -21,10 +21,10 @@
     <file src="release/lib/net45/Yaaf.Sasl.xml" target="lib\net45\Yaaf.Sasl.xml" />
     <file src="release/lib/net40/Yaaf.Sasl.dll" target="lib\net40\Yaaf.Sasl.dll" />
     <file src="release/lib/net40/Yaaf.Sasl.xml" target="lib\net40\Yaaf.Sasl.xml" />
-    <file src="release/lib/portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1/Yaaf.Sasl.dll" 
+    <file src="release/lib/profile111/Yaaf.Sasl.dll"
           target="lib\portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1\Yaaf.Sasl.dll" />
-    <file src="release/lib/portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1/Yaaf.Sasl.xml" 
+    <file src="release/lib/profile111/Yaaf.Sasl.xml"
           target="lib\portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1\Yaaf.Sasl.xml" />
-    <file src="doc/LICENSE.md" target="LICENSE.md" />
+    <file src="LICENSE.md" target="LICENSE.md" />
   </files>
 </package>

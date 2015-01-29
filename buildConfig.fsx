@@ -13,10 +13,7 @@
 *)
 
 
-// Supended until FAKE supports custom mono parameters
-#I @".nuget/Build/FAKE/tools/" // FAKE
-#r @"FakeLib.dll"  //FAKE
-
+open BuildConfigDef
 open System.Collections.Generic
 open System.IO
 
@@ -25,103 +22,92 @@ open Fake.Git
 open Fake.FSharpFormatting
 open AssemblyInfoFile
 
-
-// properties (main)
-let projectName = "Yaaf.Sasl"
-let copyrightNotice = "Yaaf.Sasl Copyright © Matthias Dittrich 2011-2015"
-let projectSummary = "Yaaf.Sasl is a simple .net library for SASL."
-let projectDescription = "Yaaf.Sasl is a SASL .net library."
-let authors = ["Matthias Dittrich"]
-let page_author = "Matthias Dittrich"
-let mail = "matthi.d@gmail.com"
-let version = "1.0.0.0"
-let version_nuget = "1.0.0"
-let commitHash = Information.getCurrentSHA1(".")
-
-// properties ldap
-let projectName_ldap = "Yaaf.Sasl.Ldap"
-let projectSummary_ldap = "Yaaf.Sasl.Ldap is a server LDAP backend for Yaaf.Sasl."
-let projectDescription_ldap = "Yaaf.Sasl.Ldap is a server LDAP backend for Yaaf.Sasl."
-let version_ldap = "1.0.0.0"
-let version_nuget_ldap = "1.0.0"
-
-let github_user = "matthid"
-let github_project = "Yaaf.Sasl"
-let nuget_url = "https://www.nuget.org/packages/Yaaf.Sasl/"
-
-let tags = "sasl C# F# dotnet .net ldap"
-
-let generated_file_list =
-  [ "Yaaf.Sasl.dll"
-    "Yaaf.Sasl.xml"
-    "Yaaf.Sasl.Ldap.dll"
-    "Yaaf.Sasl.Ldap.xml" ]
-
-type BuildParams =
-    {
-        SimpleBuildName : string
-        CustomBuildName : string
-    }
-
-let net40Params = { SimpleBuildName = "net40"; CustomBuildName = "net40" }
-let net45Params = { SimpleBuildName = "net45"; CustomBuildName = "net45" }
-let profile111Params = { SimpleBuildName = "profile111"; CustomBuildName = "portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1" }
-
-let allParams = [ net40Params; net45Params; profile111Params ]
-
-let use_nuget = true
-
-let buildDir = "./build/"
-let releaseDir = "./release/"
-let outLibDir = "./release/lib/"
-let outDocDir = "./release/documentation/"
-let docTemplatesDir = "./doc/templates/"
-let testDir  = "./test/"
-let nugetDir  = "./.nuget/"
-let packageDir  = "./.nuget/packages"
-
-let buildMode = "Release" // if isMono then "Release" else "Debug"
-
-// Where to look for *.cshtml templates (in this order)
-let layoutRoots =
-    [ docTemplatesDir; 
-      docTemplatesDir @@ "reference" ]
-
 if isMono then
     monoArguments <- "--runtime=v4.0 --debug"
-    //monoArguments <- "--runtime=v4.0"
 
-let github_url = sprintf "https://github.com/%s/%s" github_user github_project
-
-// Read release notes document
-let release = ReleaseNotesHelper.parseReleaseNotes (File.ReadLines "doc/ReleaseNotes.md")
-
-let nugetPackages =
-  [ "Yaaf.Sasl.nuspec", (fun p ->
-      { p with
-          Authors = authors
-          Project = projectName
-          Summary = projectSummary
-          Description = projectDescription
-          Version = version_nuget
-          ReleaseNotes = toLines release.Notes
-          Tags = tags
-          Dependencies = [ ] })
-    "Yaaf.Sasl.Ldap.nuspec", (fun p ->
-      { p with
-          Authors = authors
-          Project = projectName_ldap
-          Summary = projectSummary_ldap
-          Description = projectDescription_ldap
-          Version = version_nuget_ldap
-          ReleaseNotes = toLines release.Notes
-          Tags = tags
-          Dependencies = [ projectName, version_nuget ] }) ]
-    
-let findProjectFiles (buildParams:BuildParams) =
+let findProjects (buildParams:BuildParams) =
     !! (sprintf "src/source/**/*.%s.fsproj" buildParams.CustomBuildName)
-    ++ (sprintf "src/source/**/*.%s.csproj" buildParams.CustomBuildName)
+    :> _ seq
+let findTestProjects (buildParams:BuildParams) =
+    !! (sprintf "src/test/**/*.%s.fsproj" buildParams.CustomBuildName)
+    :> _ seq
 
-let findTestFiles (buildParams:BuildParams) =
-    !! (sprintf "src/test/**/Test.*.%s.fsproj" buildParams.CustomBuildName)
-    ++ (sprintf "src/test/**/Test.*.%s.csproj" buildParams.CustomBuildName)
+let buildConfig =
+ // properties ldap
+ let projectName_ldap = "Yaaf.Sasl.Ldap"
+ let projectSummary_ldap = "Yaaf.Sasl.Ldap is a server LDAP backend for Yaaf.Sasl."
+ let projectDescription_ldap = "Yaaf.Sasl.Ldap is a server LDAP backend for Yaaf.Sasl."
+ let version_nuget_ldap = "1.0.0"
+ // Read release notes document
+ let release = ReleaseNotesHelper.parseReleaseNotes (File.ReadLines "doc/ReleaseNotes.md")
+ { BuildConfiguration.Defaults with
+    ProjectName = "Yaaf.Sasl"
+    CopyrightNotice = "Yaaf.Sasl Copyright © Matthias Dittrich 2011-2015"
+    ProjectSummary = "Yaaf.Sasl is a simple .net library for SASL."
+    ProjectDescription = "Yaaf.Sasl is a SASL .net library."
+    ProjectAuthors = ["Matthias Dittrich"]
+    NugetTags =  "sasl C# F# dotnet .net ldap"
+    PageAuthor = "Matthias Dittrich"
+    GithubUser = "matthid"
+    Version = release.NugetVersion
+    NugetPackages =
+      [ "Yaaf.Sasl.nuspec", (fun config p ->
+          { p with
+              Version = config.Version
+              ReleaseNotes = toLines release.Notes
+              Dependencies = [ ] })
+        "Yaaf.Sasl.Ldap.nuspec", (fun config p ->
+          { p with
+              Project = projectName_ldap
+              Summary = projectSummary_ldap
+              Description = projectDescription_ldap
+              Version = version_nuget_ldap
+              ReleaseNotes = toLines release.Notes
+              Dependencies = [ config.ProjectName, config.Version ] }) ]
+    UseNuget = true
+    SetAssemblyFileVersions = (fun config ->
+      let info =
+        [ Attribute.Company config.ProjectName
+          Attribute.Product config.ProjectName
+          Attribute.Copyright config.CopyrightNotice
+          Attribute.Version config.Version
+          Attribute.FileVersion config.Version
+          Attribute.InformationalVersion config.Version]
+      CreateFSharpAssemblyInfo "./src/SharedAssemblyInfo.fs" info
+      let info =
+        [ Attribute.Company projectName_ldap
+          Attribute.Product projectName_ldap
+          Attribute.Copyright config.CopyrightNotice
+          Attribute.Version version_nuget_ldap
+          Attribute.FileVersion version_nuget_ldap
+          Attribute.InformationalVersion version_nuget_ldap]
+      CreateFSharpAssemblyInfo "./src/SharedAssemblyInfo.Ldap.fs" info)
+    GeneratedFileList =
+      [ "Yaaf.Sasl.dll"
+        "Yaaf.Sasl.xml"
+        "Yaaf.Sasl.Ldap.dll"
+        "Yaaf.Sasl.Ldap.xml" ]
+    EnableProjectFileCreation = false
+    BuildTargets =
+     [ { BuildParams.Empty with
+          // The default build
+          CustomBuildName = "net40"
+          SimpleBuildName = "net40"
+          FindProjectFiles = findProjects
+          FindTestFiles = findTestProjects }
+       { BuildParams.Empty with
+          // The generated templates
+          CustomBuildName = "portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1"
+          SimpleBuildName = "profile111"
+          FindProjectFiles = findProjects
+          FindTestFiles = findTestProjects
+          FindUnitTestDlls =
+            // Don't run on mono.
+            if isMono then (fun _ -> Seq.empty) else BuildParams.Empty.FindUnitTestDlls }
+       { BuildParams.Empty with
+          // The generated templates
+          CustomBuildName = "net45"
+          SimpleBuildName = "net45"
+          FindProjectFiles = findProjects
+          FindTestFiles = findTestProjects } ]
+  }

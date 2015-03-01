@@ -12,6 +12,11 @@
     The secound step is executing this file which resolves all dependencies, builds the solution and executes all unit tests
 *)
 
+#if FAKE
+#else
+// Support when file is opened in Visual Studio
+#load "packages/Yaaf.AdvancedBuilding/content/buildConfigDef.fsx"
+#endif
 
 open BuildConfigDef
 open System.Collections.Generic
@@ -24,13 +29,6 @@ open AssemblyInfoFile
 
 if isMono then
     monoArguments <- "--runtime=v4.0 --debug"
-
-let findProjects (buildParams:BuildParams) =
-    !! (sprintf "src/source/**/*.%s.fsproj" buildParams.CustomBuildName)
-    :> _ seq
-let findTestProjects (buildParams:BuildParams) =
-    !! (sprintf "src/test/**/*.%s.fsproj" buildParams.CustomBuildName)
-    :> _ seq
 
 let buildConfig =
  // properties ldap
@@ -55,7 +53,7 @@ let buildConfig =
           { p with
               Version = config.Version
               ReleaseNotes = toLines release.Notes
-              Dependencies = [ ] })
+              Dependencies = [ "FSharp.Core", "3.1.2.1" ] })
         "Yaaf.Sasl.Ldap.nuspec", (fun config p ->
           { p with
               Project = projectName_ldap
@@ -63,8 +61,13 @@ let buildConfig =
               Description = projectDescription_ldap
               Version = version_nuget_ldap
               ReleaseNotes = toLines release.Notes
-              Dependencies = [ config.ProjectName, config.Version ] }) ]
-    UseNuget = true
+              Dependencies = 
+                [ "FSharp.Core", "3.1.2.1"
+                  "Mono.Security", "3.2.3.0"
+                  "Novell.Directory.Ldap", "2.2.1"
+                  "Yaaf.FSharp.Helper", "0.1.4"
+                  config.ProjectName, config.Version ] }) ]
+    UseNuget = false
     SetAssemblyFileVersions = (fun config ->
       let info =
         [ Attribute.Company config.ProjectName
@@ -89,25 +92,25 @@ let buildConfig =
         "Yaaf.Sasl.Ldap.xml" ]
     EnableProjectFileCreation = false
     BuildTargets =
-     [ { BuildParams.Empty with
+     [ { BuildParams.WithSolution with
           // The default build
-          CustomBuildName = "net40"
-          SimpleBuildName = "net40"
-          FindProjectFiles = findProjects
-          FindTestFiles = findTestProjects }
-       { BuildParams.Empty with
+          PlatformName = "Net40"
+          // Workaround FSharp.Compiler.Service not liking to have a FSharp.Core here: https://github.com/fsprojects/FSharpx.Reflection/issues/1
+          AfterBuild = fun _ -> File.Delete "build/net40/FSharp.Core.dll"
+          SimpleBuildName = "net40" }
+       { BuildParams.WithSolution with
           // The generated templates
-          CustomBuildName = "portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1"
+          PlatformName = "Profile111"
+          // Workaround FSharp.Compiler.Service not liking to have a FSharp.Core here: https://github.com/fsprojects/FSharpx.Reflection/issues/1
+          AfterBuild = fun _ -> File.Delete "build/profile111/FSharp.Core.dll"
           SimpleBuildName = "profile111"
-          FindProjectFiles = findProjects
-          FindTestFiles = findTestProjects
           FindUnitTestDlls =
             // Don't run on mono.
             if isMono then (fun _ -> Seq.empty) else BuildParams.Empty.FindUnitTestDlls }
-       { BuildParams.Empty with
+       { BuildParams.WithSolution with
           // The generated templates
-          CustomBuildName = "net45"
-          SimpleBuildName = "net45"
-          FindProjectFiles = findProjects
-          FindTestFiles = findTestProjects } ]
+          PlatformName = "Net45"
+          // Workaround FSharp.Compiler.Service not liking to have a FSharp.Core here: https://github.com/fsprojects/FSharpx.Reflection/issues/1
+          AfterBuild = fun _ -> File.Delete "build/net45/FSharp.Core.dll"
+          SimpleBuildName = "net45" } ]
   }

@@ -35,7 +35,7 @@ let buildConfig =
  let projectName_ldap = "Yaaf.Sasl.Ldap"
  let projectSummary_ldap = "Yaaf.Sasl.Ldap is a server LDAP backend for Yaaf.Sasl."
  let projectDescription_ldap = "Yaaf.Sasl.Ldap is a server LDAP backend for Yaaf.Sasl."
- let version_nuget_ldap = "1.0.0"
+ let version_nuget_ldap = "1.0.1"
  // Read release notes document
  let release = ReleaseNotesHelper.parseReleaseNotes (File.ReadLines "doc/ReleaseNotes.md")
  { BuildConfiguration.Defaults with

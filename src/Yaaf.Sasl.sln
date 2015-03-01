@@ -64,34 +64,62 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{74E37E7B-B46
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{9A47C8E6-9866-4184-B68F-112E3D3AC1D6}"
 	ProjectSection(SolutionItems) = preProject
-		..\nuget\IrcDotNet.nuspec = ..\nuget\IrcDotNet.nuspec
-		..\nuget\IrcDotNet.Sample.nuspec = ..\nuget\IrcDotNet.Sample.nuspec
+		..\nuget\Yaaf.Sasl.Ldap.nuspec = ..\nuget\Yaaf.Sasl.Ldap.nuspec
+		..\nuget\Yaaf.Sasl.nuspec = ..\nuget\Yaaf.Sasl.nuspec
 	EndProjectSection
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yaaf.Sasl.net40", "source\Yaaf.Sasl\Yaaf.Sasl.net40.fsproj", "{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yaaf.Sasl", "source\Yaaf.Sasl\Yaaf.Sasl.fsproj", "{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yaaf.Sasl.Ldap.net40", "source\Yaaf.Sasl.Ldap\Yaaf.Sasl.Ldap.net40.fsproj", "{F63881EB-2396-463F-8756-CBBA3F2AF9FA}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yaaf.Sasl.Ldap", "source\Yaaf.Sasl.Ldap\Yaaf.Sasl.Ldap.fsproj", "{F63881EB-2396-463F-8756-CBBA3F2AF9FA}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Test.Yaaf.Sasl.net40", "test\Test.Yaaf.Sasl\Test.Yaaf.Sasl.net40.fsproj", "{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{CBC42D87-CFD8-467D-923B-A5DC7D25E02A}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Test.Yaaf.Sasl", "test\Test.Yaaf.Sasl\Test.Yaaf.Sasl.fsproj", "{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Debug|Net40 = Debug|Net40
+		Debug|Net45 = Debug|Net45
+		Debug|Profile111 = Debug|Profile111
+		Release|Net40 = Release|Net40
+		Release|Net45 = Release|Net45
+		Release|Profile111 = Release|Profile111
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Debug|Net40.ActiveCfg = Debug|Net40
+		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Debug|Net40.Build.0 = Debug|Net40
+		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Debug|Net45.ActiveCfg = Debug|Net45
+		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Debug|Net45.Build.0 = Debug|Net45
+		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Debug|Profile111.ActiveCfg = Debug|Profile111
+		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Debug|Profile111.Build.0 = Debug|Profile111
+		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Release|Net40.ActiveCfg = Release|Net40
+		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Release|Net40.Build.0 = Release|Net40
+		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Release|Net45.ActiveCfg = Release|Net45
+		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Release|Net45.Build.0 = Release|Net45
+		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Release|Profile111.ActiveCfg = Release|Profile111
+		{ACB4D3E9-0627-48C7-9790-10AA6926FB6F}.Release|Profile111.Build.0 = Release|Profile111
+		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Debug|Net40.ActiveCfg = Debug|Net40
+		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Debug|Net40.Build.0 = Debug|Net40
+		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Debug|Net45.ActiveCfg = Debug|Net45
+		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Debug|Net45.Build.0 = Debug|Net45
+		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Debug|Profile111.ActiveCfg = Debug|Profile111
+		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Release|Net40.ActiveCfg = Release|Net40
+		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Release|Net40.Build.0 = Release|Net40
+		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Release|Net45.ActiveCfg = Release|Net45
+		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Release|Net45.Build.0 = Release|Net45
+		{F63881EB-2396-463F-8756-CBBA3F2AF9FA}.Release|Profile111.ActiveCfg = Release|Profile111
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Debug|Net40.ActiveCfg = Debug|Net40
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Debug|Net40.Build.0 = Debug|Net40
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Debug|Net45.ActiveCfg = Debug|Net45
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Debug|Net45.Build.0 = Debug|Net45
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Debug|Profile111.ActiveCfg = Debug|Profile111
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Debug|Profile111.Build.0 = Debug|Profile111
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Release|Net40.ActiveCfg = Release|Net40
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Release|Net40.Build.0 = Release|Net40
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Release|Net45.ActiveCfg = Release|Net45
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Release|Net45.Build.0 = Release|Net45
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Release|Profile111.ActiveCfg = Release|Profile111
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E}.Release|Profile111.Build.0 = Release|Profile111
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,6 +131,7 @@ Global
 		{36F2CC74-84CC-4CCD-B2E4-D510E71057FB} = {240ED267-B8AE-4A38-8FB7-A9376FA28A17}
 		{74E37E7B-B460-4C6E-AF28-76F81ED333DA} = {36F2CC74-84CC-4CCD-B2E4-D510E71057FB}
 		{9A47C8E6-9866-4184-B68F-112E3D3AC1D6} = {4C04B011-7998-4549-A3B5-E57AAF5A2966}
+		{6101B3FA-6650-4F0A-9B67-75C4A0CC323E} = {CBC42D87-CFD8-467D-923B-A5DC7D25E02A}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = IrcDotNet.vsmdi

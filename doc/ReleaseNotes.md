@@ -1,4 +1,5 @@
-﻿### 1.0.2-beta
+﻿
+### 1.0.2-beta2
 
  * Try again as gh-pages was not available.
 

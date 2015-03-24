@@ -53,7 +53,9 @@ let buildConfig =
           { p with
               Version = config.Version
               ReleaseNotes = toLines release.Notes
-              Dependencies = [ "FSharp.Core", "3.1.2.1" ] })
+              Dependencies =
+                [ "FSharp.Core" ]
+                |> List.map (fun name -> name, (GetPackageVersion "packages" name)) })
         "Yaaf.Sasl.Ldap.nuspec", (fun config p ->
           { p with
               Project = projectName_ldap
@@ -62,11 +64,12 @@ let buildConfig =
               Version = version_nuget_ldap
               ReleaseNotes = toLines release.Notes
               Dependencies = 
-                [ "FSharp.Core", "3.1.2.1"
-                  "Mono.Security", "3.2.3.0"
-                  "Novell.Directory.Ldap", "2.2.1"
-                  "Yaaf.FSharp.Helper", "0.1.4"
-                  config.ProjectName, config.Version ] }) ]
+                [ "FSharp.Core"
+                  "Mono.Security"
+                  "Novell.Directory.Ldap"
+                  "Yaaf.FSharp.Helper" ]
+                  |> List.map (fun name -> name, (GetPackageVersion "packages" name))
+                  |> List.append [ config.ProjectName, config.Version ] }) ]
     UseNuget = false
     SetAssemblyFileVersions = (fun config ->
       let info =
@@ -95,14 +98,10 @@ let buildConfig =
      [ { BuildParams.WithSolution with
           // The default build
           PlatformName = "Net40"
-          // Workaround FSharp.Compiler.Service not liking to have a FSharp.Core here: https://github.com/fsprojects/FSharpx.Reflection/issues/1
-          AfterBuild = fun _ -> File.Delete "build/net40/FSharp.Core.dll"
           SimpleBuildName = "net40" }
        { BuildParams.WithSolution with
           // The generated templates
           PlatformName = "Profile111"
-          // Workaround FSharp.Compiler.Service not liking to have a FSharp.Core here: https://github.com/fsprojects/FSharpx.Reflection/issues/1
-          AfterBuild = fun _ -> File.Delete "build/profile111/FSharp.Core.dll"
           SimpleBuildName = "profile111"
           FindUnitTestDlls =
             // Don't run on mono.
@@ -110,7 +109,5 @@ let buildConfig =
        { BuildParams.WithSolution with
           // The generated templates
           PlatformName = "Net45"
-          // Workaround FSharp.Compiler.Service not liking to have a FSharp.Core here: https://github.com/fsprojects/FSharpx.Reflection/issues/1
-          AfterBuild = fun _ -> File.Delete "build/net45/FSharp.Core.dll"
           SimpleBuildName = "net45" } ]
   }

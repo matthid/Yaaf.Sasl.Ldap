@@ -1,4 +1,4 @@
-﻿# Yaaf.Sasl implementation documentation 
+﻿# Yaaf.Sasl.Ldap implementation documentation 
 
 ## Building
 
@@ -10,9 +10,9 @@ This project aims provides a SASL implementation in C#.
 
 ### Issues / Features / TODOs
 
-New features are accepted via github pull requests (so just fork away right now!):  https://github.com/matthid/Yaaf.Sasl.
+New features are accepted via github pull requests (so just fork away right now!):  https://github.com/matthid/Yaaf.Sasl.Ldap
 
-Issues and TODOs are tracked on github, see: https://github.com/matthid/Yaaf.Sasl/issues.
+Issues and TODOs are tracked on github, see: https://github.com/matthid/Yaaf.Sasl.Ldap/issues
 
 Discussions/Forums are on IRC. 
 
@@ -21,7 +21,5 @@ Discussions/Forums are on IRC.
 http://semver.org/
 
 ### High level documentation ordered by project.
-
-- `Yaaf.Sasl`: The Core abstraction and implementation of SASL.
 
 - `Yaaf.Sasl.Ldap`: A LDAP backend for SASL PLAIN authentication.

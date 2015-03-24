@@ -5,7 +5,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">Net40</Platform>
-    <ProjectGuid>6101b3fa-6650-4f0a-9b67-75c4a0cc323e</ProjectGuid>
+    <ProjectGuid>{ba7d43a2-2768-4686-a388-7a6748a5dd70}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Test.Yaaf.Sasl</RootNamespace>
     <AssemblyName>Test.Yaaf.Sasl</AssemblyName>
@@ -57,25 +57,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Profile111' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants Condition=" '$(OS)' != 'Unix' ">DEBUG;TRACE;PCL;PCL_111</DefineConstants>
-    <DefineConstants Condition=" '$(OS)' == 'Unix' ">DEBUG;TRACE;PCL;PCL_111;MONO</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Profile111' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>$(SolutionDir)/../build/test/profile111</OutputPath>
-    <DefineConstants Condition=" '$(OS)' != 'Unix' ">TRACE;PCL;PCL_111</DefineConstants>
-    <DefineConstants Condition=" '$(OS)' == 'Unix' ">TRACE;PCL;PCL_111;MONO</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
   <Import Project="$(SolutionDir)\..\packages\Yaaf.AdvancedBuilding\content\build.targets" />
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
@@ -102,13 +83,6 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <ProjectReference Include="..\..\source\Yaaf.Sasl\Yaaf.Sasl.fsproj">
-      <Name>Yaaf.Sasl</Name>
-      <Project>{acb4d3e9-0627-48c7-9790-10aa6926fb6f}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-  </ItemGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')">
       <ItemGroup>
@@ -293,6 +267,35 @@
       <ItemGroup>
         <Reference Include="Portable.Text.Encoding">
           <HintPath>..\..\..\packages\Yaaf.Portable.Text.Encoding\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Portable.Text.Encoding.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0')">
+      <ItemGroup>
+        <Reference Include="Yaaf.Sasl">
+          <HintPath>..\..\..\packages\Yaaf.Sasl\lib\net40\Yaaf.Sasl.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+      <ItemGroup>
+        <Reference Include="Yaaf.Sasl">
+          <HintPath>..\..\..\packages\Yaaf.Sasl\lib\net45\Yaaf.Sasl.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == 'WindowsPhoneApp') Or ($(TargetFrameworkIdentifier) == '.NETCore') Or ($(TargetFrameworkProfile) == 'Profile7') Or ($(TargetFrameworkProfile) == 'Profile32') Or ($(TargetFrameworkProfile) == 'Profile44') Or ($(TargetFrameworkProfile) == 'Profile111') Or ($(TargetFrameworkProfile) == 'Profile151')">
+      <ItemGroup>
+        <Reference Include="Yaaf.Sasl">
+          <HintPath>..\..\..\packages\Yaaf.Sasl\lib\portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1\Yaaf.Sasl.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>

@@ -6,6 +6,7 @@ nuget Yaaf.AdvancedBuilding
 
 // Projects
 nuget FSharp.Core
+nuget Yaaf.Sasl
 nuget FsUnit
 nuget NUnit == 2.6.3
 nuget Yaaf.FSharp.Helper

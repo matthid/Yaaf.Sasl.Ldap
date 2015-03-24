@@ -25,14 +25,7 @@ module LdapConn =
     let setEng () = 
         System.Threading.Thread.CurrentThread.CurrentCulture <- System.Globalization.CultureInfo.InvariantCulture
         System.Threading.Thread.CurrentThread.CurrentUICulture <- System.Globalization.CultureInfo.InvariantCulture
-    let testConfig = 
-      { Host = 
-          { HostName = "ldap.yaaf.de"
-            Port = 636
-            Ssl = true }
-        User = 
-          { Name = "uid=ldapuser,ou=People,dc=yaaf,dc=de"
-            Password = "T6y3369OruBc6NvvgMod" } }
+
     (* not implemented on mono...
         open System.DirectoryServices.Protocols
         let connect (config:LdapConfig) = 
